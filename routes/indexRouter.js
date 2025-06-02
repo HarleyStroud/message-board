@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const router = Router();
+const messageController = require('../controllers/messageController');
 
 const messages = [
     {
@@ -14,9 +15,7 @@ const messages = [
     },
 ];
 
-router.get('/', (req, res) => {
-    res.render('index', {title: "Mini Messageboard", messages: messages });
-});
+router.get('/', messageController.getAllMessages);
 
 router.get('/new', (req, res) => {
    res.render("form") 
@@ -31,9 +30,6 @@ router.post("/new", (req, res) => {
     res.redirect("/");
 });
 
-router.get("/messages/:id", (req, res) => {
-    const message = messages[req.params.id];
-    res.render("message", { message });
-});
+router.get("/messages/:id", messageController.getMessageById);
 
 module.exports = router;
