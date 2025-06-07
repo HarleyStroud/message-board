@@ -55,3 +55,14 @@ const PORT = process.env.PORT || 3000;
         process.exit(1);
     }
 })();
+
+
+app.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use.`);
+    } 
+    else {
+        console.error('Unexpected server error:', err);
+    }
+    process.exit(1);
+});

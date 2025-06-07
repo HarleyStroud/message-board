@@ -31,4 +31,16 @@ const getMessageById = asyncHandler(async (req, res) => {
     res.render('message', { message });
 });
 
-module.exports = { getMessageById, getAllMessages };
+const createMessage = asyncHandler(async (req, res) => {
+    const { username, messageText } = req.body;
+
+    if(!username || !messageText) {
+        res.status(400).send("Username and message text are required");
+        return;
+    }
+
+    const newMessage = await db.insertMessage({username, messageText });
+    res.redirect('/');
+});
+
+module.exports = { getMessageById, getAllMessages, createMessage };
